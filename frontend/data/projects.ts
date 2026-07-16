@@ -41,7 +41,7 @@ export const projects: Project[] = [
     tagline: "Precio recalculado en cada cambio de mercado, sin lag perceptible.",
     description: "React · Go · Redis",
     stack: ["React", "Go", "Redis"],
-    layers: { ui: 0.8, api: 1.6, db: 0.6 },
+    layers: { ui: 0, api: 1.6, db: 0.6 },
     layerDetails: [],
     metrics: [],
   },

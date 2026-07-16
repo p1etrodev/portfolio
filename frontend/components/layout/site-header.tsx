@@ -7,6 +7,7 @@ import { cn } from "@/utils/cn";
 import { usePathname } from "next/navigation";
 
 const links = [
+  { href: "/", label: "inicio" },
   { href: "/proyectos", label: "proyectos" },
   { href: "/sobre-mi", label: "sobre mí" },
   { href: "/contacto", label: "contacto" },

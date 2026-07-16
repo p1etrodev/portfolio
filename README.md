@@ -55,7 +55,7 @@ frontend/
 ### 2. Páginas / secciones
 - [x] **Navbar**: logo + nav (proyectos/sobre mí/contacto) + botón CV, sticky, estado activo por ruta — [site-header.tsx](frontend/components/layout/site-header.tsx) (el link de CV apunta a `/cv.pdf`, que todavía no existe — sección 4)
 - [x] **Inicio**: hero con tag, tagline, layer badge, CTAs — [page.tsx](frontend/app/page.tsx). "agendar llamada" hoy linkea a `/contacto` (no hay herramienta de booking definida). Falta: nav superior con CV descargable ya está en el navbar global, así que no aplica acá.
-- [ ] **Proyectos** (listado): grid de cards, cada una con su propio layer badge con proporción real, stack usado, crumb/numeración
+- [x] **Proyectos** (listado): grid de cards con crumb/numeración, stack y layer badge con la proporción real de cada proyecto — [page.tsx](frontend/app/proyectos/page.tsx)
 - [ ] **Caso de estudio** (detalle de proyecto): 3 columnas (interfaz/lógica/datos) con borde de color por capa, métricas destacadas (mono, coloreadas por capa)
 - [ ] **Sobre mí**: bloques de stack por capa (frontend/backend/datos), texto de proceso de trabajo
 - [ ] **Contacto**: formulario (nombre + mensaje), tiempo de respuesta, botón enviar
