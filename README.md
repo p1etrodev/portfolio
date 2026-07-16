@@ -45,15 +45,15 @@ frontend/
 **Base SEO ya andando:** cada ruta tiene su propio `title`/`description`/canonical vía `buildMetadata()`, `sitemap.xml` lista todas las rutas (incluye proyectos dinámicos), `robots.txt` permite indexación, `manifest.webmanifest`, y JSON-LD tipo `Person` en el layout raíz. Falta: contenido real (sección 3), imagen OG de marca, y el favicon (sección 4).
 
 ### 1. Design system / componentes base
-- [ ] Componente **Layer badge** (barra de 3 segmentos lima/magenta/cian con proporciones configurables) — elemento de firma, reutilizable en cards, hero, sobre mí
-- [ ] Componente **Tag** (`tag-ui`, `tag-api`, `tag-db`) con punto de color
-- [ ] Componentes de botón (`btn-primary`, `btn-ghost`)
-- [ ] Componente **browser-frame** (mockup de navegador con barra de puntos + URL) si se reutiliza como marco visual, o descartar si en el sitio real no aplica
-- [ ] Tipografía: helpers/clases para los 3 roles fijos (display itálica, UI, mono) — regla dura: nunca mezclar roles
-- [ ] Animación "assemble" (entrada escalonada desde abajo) como utilidad reusable
+- [x] Componente **Layer badge** — [layer-badge.tsx](frontend/components/ui/layer-badge.tsx), recibe `ratios={{ ui, api, db }}` para la proporción real por proyecto
+- [x] Componente **Tag** — [tag.tsx](frontend/components/ui/tag.tsx), un solo componente con `variant="ui" | "api" | "db"`
+- [x] Componente de botón — [button.tsx](frontend/components/ui/button.tsx): un solo `Button` polimórfico con `variant="primary" | "ghost"`; si recibe `href` renderiza `<Link>`, si no, `<button>` (evita tener `Button` y `ButtonLink` por separado)
+- [x] Tipografía: ya cubierta por los tokens `font-display`/`font-ui`/`font-mono` del theme (sección 0), no requiere componente aparte
+- [x] Animación "assemble" — utilidad CSS `.animate-assemble` en [globals.css](frontend/app/globals.css)
 
 ### 2. Páginas / secciones
-- [ ] **Inicio**: hero con tagline, layer badge, CTAs ("ver proyectos", "agendar llamada"), nav superior con CV descargable
+- [x] **Navbar**: logo + nav (proyectos/sobre mí/contacto) + botón CV, sticky, estado activo por ruta — [site-header.tsx](frontend/components/layout/site-header.tsx) (el link de CV apunta a `/cv.pdf`, que todavía no existe — sección 4)
+- [ ] **Inicio**: hero con tagline, layer badge, CTAs ("ver proyectos", "agendar llamada")
 - [ ] **Proyectos** (listado): grid de cards, cada una con su propio layer badge con proporción real, stack usado, crumb/numeración
 - [ ] **Caso de estudio** (detalle de proyecto): 3 columnas (interfaz/lógica/datos) con borde de color por capa, métricas destacadas (mono, coloreadas por capa)
 - [ ] **Sobre mí**: bloques de stack por capa (frontend/backend/datos), texto de proceso de trabajo
