@@ -68,11 +68,23 @@ export default function SobreMiPage() {
       <Tag variant="ui">full stack · disponible</Tag>
 
       <h1 className="mt-3 font-ui text-3xl font-black">Cómo armo un proyecto</h1>
+      <p className="mt-1 font-mono text-[12px] text-text-muted">
+        Mar del Plata, Argentina · inglés C2 oral / B2 escrito
+      </p>
       <p className="mt-2 max-w-155 text-[15px] text-text-muted leading-[1.7]">
         Full stack independiente hace más de 5 años. Prefiero entregar el flujo entero antes que
         optimizar una sola capa: cuando falta una API, la escribo; cuando falta una pantalla, la
         levanto.
       </p>
+
+      <section className="mt-12 flex max-w-155 flex-col gap-3">
+        <h2 className="font-ui text-xl font-bold">Cómo llegué acá</h2>
+        <p className="text-[15px] text-text-muted leading-[1.7]">
+          Empecé en data science, del lado de data engineering. De ahí pasé a backend, después me
+          metí en machine learning y AI engineering, y terminé sumando frontend. Así terminé armando
+          el producto entero: no por plan, sino por ir agarrando la capa que faltaba cada vez.
+        </p>
+      </section>
 
       <section className="mt-12">
         <h2 className="font-ui text-xl font-bold">Stack</h2>
@@ -133,6 +145,18 @@ export default function SobreMiPage() {
             ))}
           </ul>
         </div>
+      </section>
+
+      <section className="mt-12 flex max-w-155 flex-col gap-3">
+        <h2 className="font-ui text-xl font-bold">Fuera del código</h2>
+        <p className="text-[15px] text-text-muted leading-[1.7]">
+          League of Legends, pool y D&D los fines de semana, y cocina en serio — de ahí salió la
+          idea de{" "}
+          <Link href="/proyectos/costea" className="text-layer-ui hover:underline">
+            Costea
+          </Link>
+          .
+        </p>
       </section>
 
       <section className="mt-12 flex flex-col gap-3">
