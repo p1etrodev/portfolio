@@ -58,6 +58,12 @@ const stackByLayer: { layer: ProjectLayer; languages: StackLanguageGroup[] }[] =
   },
 ];
 
+const experience: { role: string; company: string }[] = [
+  { role: "Backend Engineer", company: "Umoob" },
+  { role: "Backend Engineer", company: "WebookYou (Tradytec)" },
+  { role: "Backend Tech Lead", company: "HelpHub (sociedad propia)" },
+];
+
 const ownCategories = new Set(["producto propio", "SaaS propio"]);
 const ownProducts = projects.filter((project) => ownCategories.has(project.category));
 const clientProjects = projects.filter((project) => !ownCategories.has(project.category));
@@ -67,23 +73,57 @@ export default function SobreMiPage() {
     <main className="mx-auto w-full max-w-360 px-6 pt-16 pb-24 sm:px-8">
       <Tag variant="ui">full stack · disponible</Tag>
 
-      <h1 className="mt-3 font-ui text-3xl font-black">Cómo armo un proyecto</h1>
+      <h1 className="mt-3 font-ui text-3xl font-black">Sobre mí</h1>
       <p className="mt-1 font-mono text-[12px] text-text-muted">
-        Mar del Plata, Argentina · inglés C2 oral / B2 escrito
+        Mar del Plata, Argentina · inglés C2 oral / B2 escrito (intérprete en LanguageLine
+        Solutions)
       </p>
-      <p className="mt-2 max-w-155 text-[15px] text-text-muted leading-[1.7]">
-        Full stack independiente hace más de 5 años. Prefiero entregar el flujo entero antes que
-        optimizar una sola capa: cuando falta una API, la escribo; cuando falta una pantalla, la
-        levanto.
-      </p>
-
-      <section className="mt-12 flex max-w-155 flex-col gap-3">
-        <h2 className="font-ui text-xl font-bold">Cómo llegué acá</h2>
+      <section className="mt-2 grid grid-cols-1 gap-8 sm:grid-cols-2">
         <p className="text-[15px] text-text-muted leading-[1.7]">
-          Empecé en data science, del lado de data engineering. De ahí pasé a backend, después me
-          metí en machine learning y AI engineering, y terminé sumando frontend. Así terminé armando
-          el producto entero: no por plan, sino por ir agarrando la capa que faltaba cada vez.
+          Full stack independiente hace más de 5 años. Prefiero entregar el flujo entero antes que
+          optimizar una sola capa: cuando falta una API, la escribo; cuando falta una pantalla, la
+          levanto.
         </p>
+
+        <div className="flex flex-col gap-3">
+          <h2 className="font-ui text-xl font-bold">Cómo llegué acá</h2>
+          <p className="text-[15px] text-text-muted leading-[1.7]">
+            Empecé en data science, del lado de data engineering. De ahí pasé a backend, después me
+            metí en machine learning y AI engineering, y terminé sumando frontend. Así terminé
+            armando el producto entero: no por plan, sino por ir agarrando la capa que faltaba cada
+            vez.
+          </p>
+        </div>
+      </section>
+
+      <section className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
+        <div className="flex flex-col gap-3">
+          <h2 className="font-ui text-xl font-bold">Experiencia</h2>
+          <ul className="flex flex-col gap-2.5">
+            {experience.map((job) => (
+              <li
+                key={job.company}
+                className="flex items-baseline justify-between gap-3 text-[15px]"
+              >
+                <span className="text-text">{job.role}</span>
+                <span className="font-mono text-[12px] text-text-muted">{job.company}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <h2 className="font-ui text-xl font-bold">Fuera del código</h2>
+          <p className="text-[15px] text-text-muted leading-[1.7]">
+            League of Legends, pool y D&D los fines de semana. La cocina la tomo en serio desde
+            antes de programar — trabajé de barista y de ayudante de cocina — y de ahí salió la idea
+            de{" "}
+            <Link href="/proyectos/costea" className="text-layer-ui hover:underline">
+              Costea
+            </Link>
+            .
+          </p>
+        </div>
       </section>
 
       <section className="mt-12">
@@ -145,18 +185,6 @@ export default function SobreMiPage() {
             ))}
           </ul>
         </div>
-      </section>
-
-      <section className="mt-12 flex max-w-155 flex-col gap-3">
-        <h2 className="font-ui text-xl font-bold">Fuera del código</h2>
-        <p className="text-[15px] text-text-muted leading-[1.7]">
-          League of Legends, pool y D&D los fines de semana, y cocina en serio — de ahí salió la
-          idea de{" "}
-          <Link href="/proyectos/costea" className="text-layer-ui hover:underline">
-            Costea
-          </Link>
-          .
-        </p>
       </section>
 
       <section className="mt-12 flex flex-col gap-3">
