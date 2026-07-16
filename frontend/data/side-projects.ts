@@ -26,7 +26,8 @@ export const sideProjects: SideProject[] = [
   {
     slug: "tango-time-tools",
     name: "Tango Counter",
-    description: "Herramienta de escritorio para cronometrar tandas de tango.",
+    description:
+      "Herramienta de escritorio para saber el tiempo restante para el reinicio de las recompensas de la plataforma TangoLive.",
     stack: ["Angular", "Electron"],
     githubUrl: "https://github.com/P1etrodev/tango-time-tools",
   },

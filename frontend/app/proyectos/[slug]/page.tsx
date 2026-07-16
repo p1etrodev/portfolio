@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { layerBorderClasses, layerTextClasses } from "@/components/ui/layer-colors";
-import { Tag } from "@/components/ui/tag";
 import { getProjectBySlug, projects } from "@/data/projects";
+import { layerBorderClasses, layerTextClasses } from "@/components/ui/layer-colors";
+
+import Link from "next/link";
+import type { Metadata } from "next";
+import { Tag } from "@/components/ui/tag";
 import { buildMetadata } from "@/lib/metadata";
+import { notFound } from "next/navigation";
 
 interface ProyectoPageProps {
   params: Promise<{ slug: string }>;
@@ -45,7 +46,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
         ficha {String(project.index).padStart(2, "0")} · {project.category}
       </p>
       <h1 className="mt-1.5 font-ui text-2xl font-black">{project.name}</h1>
-      <p className="mt-1.5 max-w-[560px] text-[15px] text-text-muted">{project.tagline}</p>
+      <p className="mt-1.5 max-w-140 text-[15px] text-text-muted">{project.tagline}</p>
       <p className="mt-2 font-mono text-[12px] text-text-muted">{project.stack.join(" · ")}</p>
 
       {project.layerDetails.length > 0 && (
@@ -65,7 +66,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
       )}
 
       {project.metrics.length > 0 && (
-        <div className="mt-8 flex flex-wrap gap-[30px] font-mono">
+        <div className="mt-8 flex flex-wrap gap-7.5 font-mono">
           {project.metrics.map((metric) => (
             <div key={metric.label}>
               <p className="text-[12px] text-text-muted">{metric.label}</p>
