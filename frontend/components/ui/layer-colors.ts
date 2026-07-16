@@ -11,3 +11,9 @@ export const layerBorderClasses: Record<ProjectLayer, string> = {
   api: "border-layer-api",
   db: "border-layer-db",
 };
+
+export const layerBgClasses: Record<ProjectLayer, string> = {
+  ui: "bg-layer-ui",
+  api: "bg-layer-api",
+  db: "bg-layer-db",
+};

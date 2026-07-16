@@ -57,7 +57,7 @@ frontend/
 - [x] **Inicio**: hero con tag, tagline, layer badge, CTAs — [page.tsx](frontend/app/page.tsx). "agendar llamada" hoy linkea a `/contacto` (no hay herramienta de booking definida). Falta: nav superior con CV descargable ya está en el navbar global, así que no aplica acá.
 - [x] **Proyectos** (listado): grid de cards con crumb/numeración, stack y layer badge con la proporción real de cada proyecto — [page.tsx](frontend/app/proyectos/page.tsx)
 - [x] **Caso de estudio** (detalle de proyecto): 3 columnas con borde de color por capa, métricas destacadas coloreadas — [\[slug\]/page.tsx](frontend/app/proyectos/[slug]/page.tsx). Solo `marketplace-b2b` tiene `layerDetails`/`metrics` reales hoy; los otros 3 proyectos degradan mostrando únicamente crumb/título/tagline hasta que se cargue contenido real (sección 3)
-- [ ] **Sobre mí**: bloques de stack por capa (frontend/backend/datos), texto de proceso de trabajo
+- [x] **Sobre mí**: bloques de stack por capa con barra de color y texto de proceso de trabajo — [page.tsx](frontend/app/sobre-mi/page.tsx) (stack y copy son placeholder, contenido real en sección 3)
 - [ ] **Contacto**: formulario (nombre + mensaje), tiempo de respuesta, botón enviar
 
 ### 3. Contenido real
