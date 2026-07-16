@@ -84,6 +84,7 @@ frontend/
 - [x] Favicon/logo placeholder (`public/logo.svg`, no es el final) — usado como `icons.icon` en metadata, en `manifest.ts` y en el header
 
 ### 5. Responsive y accesibilidad
+- [x] Tamaños de fuente del cuerpo subidos en todo el sitio (labels mono 11→12px, texto de cards 12.5→14px, párrafos 13→15px, inputs 14→16px) — quedaban muy chicos al pasar del mockup escalado al sitio real. Títulos/subtítulos sin cambios.
 - [ ] Adaptar grid de proyectos y rail lateral a mobile (el mockup ya define breakpoint `900px` para `span-2`)
 - [ ] Revisar contraste de colores en modo claro y oscuro
 - [ ] Navegación por teclado y labels de formulario accesibles

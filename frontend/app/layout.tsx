@@ -2,8 +2,8 @@ import "./globals.css";
 
 import { DM_Mono, Instrument_Serif, Schibsted_Grotesk } from "next/font/google";
 
-import type { Metadata } from "next";
 import { JsonLd } from "@/components/seo/json-ld";
+import type { Metadata } from "next";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { siteConfig } from "@/lib/site-config";

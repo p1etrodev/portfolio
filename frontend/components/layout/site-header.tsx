@@ -24,7 +24,7 @@ export function SiteHeader() {
           pietrodev
         </Link>
 
-        <div className="flex gap-6 font-ui text-[13px] text-text-muted">
+        <div className="flex gap-6 font-ui text-[15px] text-text-muted">
           {links.map((link) => {
             const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
             return (

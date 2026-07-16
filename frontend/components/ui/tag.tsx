@@ -24,7 +24,7 @@ export function Tag({ variant, children, className }: TagProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.25 rounded-full px-2.25 py-0.75 font-mono text-[10px] before:h-1.5 before:w-1.5 before:rounded-full before:content-[''] w-fit",
+        "inline-flex items-center gap-1.25 rounded-full px-2.25 py-0.75 font-mono text-[11px] before:h-1.5 before:w-1.5 before:rounded-full before:content-[''] w-fit",
         layerClasses[variant],
         className,
       )}

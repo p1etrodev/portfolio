@@ -28,7 +28,7 @@ export default function SobreMiPage() {
       <Tag variant="ui">full stack · disponible</Tag>
 
       <h1 className="mt-3 font-ui text-3xl font-black">Cómo armo un proyecto</h1>
-      <p className="mt-2 max-w-[620px] text-[13px] text-text-muted leading-[1.7]">
+      <p className="mt-2 max-w-[620px] text-[15px] text-text-muted leading-[1.7]">
         Full stack independiente hace más de 5 años. Prefiero entregar el flujo entero antes que
         optimizar una sola capa: cuando falta una API, la escribo; cuando falta una pantalla, la
         levanto.
@@ -40,7 +40,7 @@ export default function SobreMiPage() {
           {stackByLayer.map(({ layer, items }) => (
             <div key={layer} className="rounded-lg bg-paper-2 p-3 text-center">
               <div className={`mb-2 h-[3px] rounded-full ${layerBgClasses[layer]}`} />
-              <p className="font-mono text-[11px] leading-relaxed">{items.join(" · ")}</p>
+              <p className="font-mono text-[12px] leading-relaxed">{items.join(" · ")}</p>
             </div>
           ))}
         </div>
@@ -49,7 +49,7 @@ export default function SobreMiPage() {
       <section className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
         <div>
           <h2 className="font-ui text-xl font-bold">Productos propios</h2>
-          <p className="mt-2 text-[13px] text-text-muted leading-relaxed">
+          <p className="mt-2 text-[15px] text-text-muted leading-relaxed">
             Ideas propias que llevo de cero a producción, con las tres capas a mi cargo.
           </p>
           <ul className="mt-3 flex flex-col gap-2">
@@ -57,7 +57,7 @@ export default function SobreMiPage() {
               <li key={project.slug}>
                 <Link
                   href={`/proyectos/${project.slug}`}
-                  className="font-mono text-[11px] text-layer-ui hover:underline"
+                  className="font-mono text-[12px] text-layer-ui hover:underline"
                 >
                   {project.name} →
                 </Link>
@@ -68,7 +68,7 @@ export default function SobreMiPage() {
 
         <div>
           <h2 className="font-ui text-xl font-bold">Proyectos para clientes</h2>
-          <p className="mt-2 text-[13px] text-text-muted leading-relaxed">
+          <p className="mt-2 text-[15px] text-text-muted leading-relaxed">
             Sistemas a medida para consultoras y otros negocios, del relevamiento al deploy.
           </p>
           <ul className="mt-3 flex flex-col gap-2">
@@ -76,7 +76,7 @@ export default function SobreMiPage() {
               <li key={project.slug}>
                 <Link
                   href={`/proyectos/${project.slug}`}
-                  className="font-mono text-[11px] text-layer-api hover:underline"
+                  className="font-mono text-[12px] text-layer-api hover:underline"
                 >
                   {project.name} →
                 </Link>
@@ -90,7 +90,7 @@ export default function SobreMiPage() {
         <h2 className="font-ui text-xl font-bold">¿Charlamos de tu proyecto?</h2>
         <Link
           href="/contacto"
-          className="w-fit font-mono text-[11px] text-layer-ui hover:underline"
+          className="w-fit font-mono text-[12px] text-layer-ui hover:underline"
         >
           ir a contacto →
         </Link>

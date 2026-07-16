@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 export type ButtonVariant = "primary" | "ghost";
 
 const baseClasses =
-  "inline-flex items-center justify-center gap-2 rounded-lg px-[18px] py-2.5 font-ui text-[13px] font-bold transition-colors";
+  "inline-flex items-center justify-center gap-2 rounded-lg px-[18px] py-2.5 font-ui text-[15px] font-bold transition-colors";
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary: "bg-layer-ui text-bg hover:opacity-90",

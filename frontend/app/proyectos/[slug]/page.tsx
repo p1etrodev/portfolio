@@ -37,16 +37,16 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
 
   return (
     <main className="mx-auto w-full max-w-360 px-6 pt-16 pb-24 sm:px-8">
-      <Link href="/proyectos" className="font-mono text-[11px] text-text-muted hover:text-text">
+      <Link href="/proyectos" className="font-mono text-[12px] text-text-muted hover:text-text">
         ← volver a proyectos
       </Link>
 
-      <p className="mt-6 font-mono text-[11px] text-text-muted">
+      <p className="mt-6 font-mono text-[12px] text-text-muted">
         ficha {String(project.index).padStart(2, "0")} · {project.category}
       </p>
       <h1 className="mt-1.5 font-ui text-2xl font-black">{project.name}</h1>
-      <p className="mt-1.5 max-w-[560px] text-[13px] text-text-muted">{project.tagline}</p>
-      <p className="mt-2 font-mono text-[11px] text-text-muted">{project.stack.join(" · ")}</p>
+      <p className="mt-1.5 max-w-[560px] text-[15px] text-text-muted">{project.tagline}</p>
+      <p className="mt-2 font-mono text-[12px] text-text-muted">{project.stack.join(" · ")}</p>
 
       {project.layerDetails.length > 0 && (
         <div className="mt-8 grid grid-cols-1 gap-3.5 sm:grid-cols-3">
@@ -56,7 +56,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
               className={`rounded-lg border-t-[3px] bg-paper-2 p-4 ${layerBorderClasses[detail.layer]}`}
             >
               <Tag variant={detail.layer} />
-              <p className="mt-2.5 text-[12.5px] text-text-muted leading-relaxed">
+              <p className="mt-2.5 text-[14px] text-text-muted leading-relaxed">
                 {detail.description}
               </p>
             </div>
@@ -68,7 +68,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
         <div className="mt-8 flex flex-wrap gap-[30px] font-mono">
           {project.metrics.map((metric) => (
             <div key={metric.label}>
-              <p className="text-[11px] text-text-muted">{metric.label}</p>
+              <p className="text-[12px] text-text-muted">{metric.label}</p>
               <p className={`mt-1 text-xl font-bold ${layerTextClasses[metric.layer]}`}>
                 {metric.value}
               </p>
@@ -77,7 +77,7 @@ export default async function ProyectoPage({ params }: ProyectoPageProps) {
         </div>
       )}
 
-      <div className="mt-16 flex items-center justify-between border-border border-t pt-6 font-mono text-[11px]">
+      <div className="mt-16 flex items-center justify-between border-border border-t pt-6 font-mono text-[12px]">
         <Link
           href={`/proyectos/${previousProject.slug}`}
           className="text-text-muted hover:text-text"
