@@ -76,7 +76,9 @@ frontend/
 - [ ] Texto real "sobre mí" (el párrafo de proceso de trabajo sigue siendo el de `design.html`, no personalizado más allá de eso)
 
 ### 4. Funcionalidad
-- [ ] Formulario de contacto funcional vía API route propia de Next.js (`/app/api/contact`), con envío de mail (Resend/Nodemailer) — la capa "API/lógica" del portfolio hace de caso de estudio en sí misma
+- [x] Formulario de contacto con nombre, email, tipo de proyecto y mensaje — [contact-form.tsx](frontend/components/forms/contact-form.tsx)
+- [x] Combobox custom para "tipo de proyecto" (`Select`), respetando el design system en vez del `<select>` nativo — [select.tsx](frontend/components/ui/select.tsx)
+- [x] Envío real funcionando: POST directo al `formResponse` de un Google Form (sin backend propio ni API keys), en vez de Resend/Nodemailer — probado end-to-end, la respuesta llega a las Respuestas del Form. Se eliminó el stub `/api/contact` (ya no se usa)
 - [ ] Descarga de CV (link a PDF)
 - [x] Navegación entre secciones: navbar simplificado (sin la rail lateral del mockup, que era solo del visor de `design.html`) + footer completo con logo, nav, layer badge y canales de contacto — [site-footer.tsx](frontend/components/layout/site-footer.tsx)
 - [x] Base de meta tags / SEO por ruta (título, descripción, canonical, OG, Twitter, sitemap, robots, JSON-LD)
