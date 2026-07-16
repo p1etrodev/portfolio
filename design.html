@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Galería — Portfolio full stack (exploded view)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/*
+  Identidad elegida: "exploded view" — tercera dirección, deliberadamente distinta
+  a las dos anteriores (ni terminal oscura, ni cuaderno de papel). La premisa es
+  literal: un proyecto full stack tiene capas (interfaz, API, datos), y esas capas
+  se ven todo el tiempo como motivo visual — franjas de color apiladas de fondo,
+  y un "layer badge" de tres barras que aparece en cada proyecto para mostrar de
+  qué está hecho. Fondo índigo casi negro con tres acentos funcionales (no
+  decorativos): lima para UI, magenta para API/lógica, cian para datos/DB.
+  Instrument Serif itálica para las frases fuertes (contraste con el resto,
+  técnico-emocional), Schibsted Grotesk para la interfaz, DM Mono para specs.
+  Motion: cada pantalla "se arma" con sus capas entrando desde abajo, escalonado.
+*/
+:root {
+  --font-display: 'Instrument Serif', serif;
+  --font-ui: 'Schibsted Grotesk', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --color-bg: #0e1024;
+  --color-paper: #171a35;
+  --color-paper-2: #1f2342;
+  --color-text: #eef0fb;
+  --color-text-muted: #8d90b8;
+  --layer-ui: #d4f542;
+  --layer-api: #ff5d8f;
+  --layer-db: #4fd1e8;
+  --radius: 14px;
+  --shadow-elev: 0 30px 60px -20px rgba(0,0,0,0.6);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg: #eef0fb;
+    --color-paper: #ffffff;
+    --color-paper-2: #f4f5fc;
+    --color-text: #121327;
+    --color-text-muted: #5c5f80;
+    --shadow-elev: 0 24px 50px -20px rgba(20,20,50,0.18);
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  background: var(--color-bg);
+  color: var(--color-text);
+  background-image:
+    linear-gradient(180deg, rgba(212,245,66,0.05), transparent 22%),
+    linear-gradient(0deg, rgba(79,209,232,0.05), transparent 22%),
+    radial-gradient(circle at 80% 20%, rgba(255,93,143,0.09), transparent 45%);
+}
+.viewer { display: flex; min-height: 100vh; }
+.rail { width: 254px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; padding: 30px 20px; border-right: 1px solid rgba(255,255,255,0.08); }
+.rail-brand { font-family: var(--font-display); font-style: italic; font-size: 24px; margin-bottom: 8px; }
+.rail-stack { display: flex; gap: 3px; margin-bottom: 30px; }
+.rail-stack span { flex: 1; height: 4px; border-radius: 2px; }
+.rail h5 { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.1em; margin: 22px 0 8px; opacity: .5; font-weight: 400; }
+.rail a { display: block; padding: 7px 10px; border-radius: 8px; text-decoration: none; color: var(--color-text-muted); font-size: 13.5px; }
+.rail a:hover { background: rgba(212,245,66,0.1); color: var(--color-text); }
+
+.stage { flex: 1; padding: 50px clamp(20px, 4vw, 70px); max-width: 1440px; }
+.section-block { margin-bottom: 76px; }
+.section-eyebrow { font-family: var(--font-mono); font-size: 11.5px; color: var(--layer-ui); letter-spacing: 0.08em; margin: 0 0 10px; text-transform: uppercase; }
+.section-title { font-family: var(--font-ui); font-weight: 900; font-size: 36px; margin: 0 0 10px; letter-spacing: -0.02em; }
+.section-sub { color: var(--color-text-muted); margin: 0; max-width: 620px; font-size: 15px; }
+
+.grid-screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 34px; margin-top: 26px; }
+.screen-card.span-2 { grid-column: span 2; }
+@media (max-width: 900px) { .screen-card.span-2 { grid-column: span 1; } }
+
+.crumb { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); margin: 0 0 6px; }
+.screen-name { font-family: var(--font-ui); font-weight: 700; font-size: 19px; margin: 0 0 4px; }
+.screen-desc { color: var(--color-text-muted); font-size: 13.5px; margin: 0 0 16px; }
+
+.browser-frame { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-elev); background: var(--color-paper); border: 1px solid rgba(255,255,255,0.08); opacity: 0; transform: translateY(30px); animation: assemble 0.8s var(--ease) forwards; }
+.browser-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--color-paper-2); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.browser-bar .dot { width: 8px; height: 8px; border-radius: 50%; opacity: .35; background: currentColor; }
+.browser-url { margin-left: 8px; font-size: 11px; opacity: .5; font-family: var(--font-mono); }
+.browser-body { position: relative; overflow: hidden; }
+
+@keyframes assemble { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.screen-card:nth-child(1) .browser-frame { animation-delay: .05s; }
+.screen-card:nth-child(2) .browser-frame { animation-delay: .2s; }
+.screen-card:nth-child(3) .browser-frame { animation-delay: .35s; }
+
+.layer-badge { display: flex; gap: 3px; height: 6px; border-radius: 3px; overflow: hidden; margin: 10px 0; }
+.layer-badge span { flex: 1; }
+.l-ui { background: var(--layer-ui); }
+.l-api { background: var(--layer-api); }
+.l-db { background: var(--layer-db); }
+
+.tag { font-family: var(--font-mono); font-size: 10px; padding: 3px 9px; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; }
+.tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+.tag-ui { color: var(--layer-ui); background: rgba(212,245,66,0.1); } .tag-ui::before { background: var(--layer-ui); }
+.tag-api { color: var(--layer-api); background: rgba(255,93,143,0.1); } .tag-api::before { background: var(--layer-api); }
+.tag-db { color: var(--layer-db); background: rgba(79,209,232,0.1); } .tag-db::before { background: var(--layer-db); }
+
+.btn { font-family: var(--font-ui); font-weight: 700; font-size: 13px; padding: 10px 18px; border-radius: 8px; border: none; }
+.btn-primary { background: var(--layer-ui); color: #0e1024; }
+.btn-ghost { background: transparent; color: var(--color-text); border: 1px solid rgba(255,255,255,0.16); }
+</style>
+</head>
+<body>
+
+<div class="viewer">
+  <nav class="rail">
+    <div class="rail-brand">tu.stack</div>
+    <div class="rail-stack"><span class="l-ui"></span><span class="l-api"></span><span class="l-db"></span></div>
+    <h5>Explorar</h5>
+    <a href="#p-inicio">Inicio</a>
+    <a href="#p-proyectos">Proyectos</a>
+    <h5>Detalle</h5>
+    <a href="#p-caso">Caso de estudio</a>
+    <a href="#p-stack">Sobre mí</a>
+    <a href="#p-contacto">Contacto</a>
+  </nav>
+
+  <main class="stage">
+
+    <section class="section-block">
+      <p class="section-eyebrow">Explorar</p>
+      <h2 class="section-title">Cada proyecto, mostrado por capas</h2>
+      <p class="section-sub">La interfaz, la API y la base de datos como un mismo bloque — porque eso es lo que entregás vos: el producto completo, no un pedazo.</p>
+
+      <div class="grid-screens">
+
+        <article class="screen-card span-2" id="p-inicio">
+          <p class="crumb">Explorar · 01</p>
+          <h3 class="screen-name">Inicio</h3>
+          <p class="screen-desc">El hero deja ver, literalmente, las tres capas que dominás.</p>
+          <div class="browser-frame">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="browser-url">tuapellido.dev</span></div>
+            <div class="browser-body" style="padding:0;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 32px;border-bottom:1px solid rgba(255,255,255,0.06);">
+                <div style="font-family:var(--font-display);font-style:italic;font-size:19px;">tu.apellido</div>
+                <div style="display:flex;gap:24px;font-size:13px;color:var(--color-text-muted);"><span>proyectos</span><span>sobre mí</span><span>contacto</span></div>
+                <div class="btn btn-ghost">CV ↓</div>
+              </div>
+              <div style="padding:54px 32px 60px;position:relative;">
+                <p class="tag tag-ui" style="margin-bottom:18px;">full stack · disponible</p>
+                <h1 style="font-family:var(--font-ui);font-weight:900;font-size:42px;line-height:1.08;margin:0 0 8px;max-width:620px;">
+                  Hago el producto entero.
+                </h1>
+                <p style="font-family:var(--font-display);font-style:italic;font-size:24px;color:var(--color-text-muted);margin:0 0 22px;">
+                  De la consulta a la base de datos, hasta el click que ve tu usuario.
+                </p>
+                <div class="layer-badge" style="max-width:420px;"><span class="l-ui"></span><span class="l-api"></span><span class="l-db"></span></div>
+                <p style="font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);margin:0 0 26px;">interfaz · lógica de negocio · datos</p>
+                <div style="display:flex;gap:10px;">
+                  <div class="btn btn-primary">ver proyectos →</div>
+                  <div class="btn btn-ghost">agendar llamada</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen-card span-2" id="p-proyectos">
+          <p class="crumb">Explorar · 02</p>
+          <h3 class="screen-name">Proyectos</h3>
+          <p class="screen-desc">Cada card muestra su propia proporción de capas: no todos son 33/33/33.</p>
+          <div class="browser-frame">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="browser-url">tuapellido.dev/proyectos</span></div>
+            <div class="browser-body" style="padding:30px;">
+              <h2 style="font-family:var(--font-ui);font-weight:800;font-size:22px;margin:0 0 20px;">Proyectos full stack</h2>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+                <div style="background:var(--color-paper-2);border-radius:10px;padding:16px;">
+                  <p class="crumb">01 · marketplace b2b</p>
+                  <h4 style="font-family:var(--font-ui);font-size:16px;margin:0 0 6px;">Checkout y catálogo con búsqueda semántica</h4>
+                  <p style="font-size:12.5px;color:var(--color-text-muted);margin:0 0 4px;">Next.js · FastAPI · pgvector</p>
+                  <div class="layer-badge"><span class="l-ui" style="flex:1.4;"></span><span class="l-api" style="flex:1;"></span><span class="l-db" style="flex:0.8;"></span></div>
+                </div>
+                <div style="background:var(--color-paper-2);border-radius:10px;padding:16px;">
+                  <p class="crumb">02 · fintech interno</p>
+                  <h4 style="font-family:var(--font-ui);font-size:16px;margin:0 0 6px;">Motor de pricing en tiempo real</h4>
+                  <p style="font-size:12.5px;color:var(--color-text-muted);margin:0 0 4px;">React · Go · Redis</p>
+                  <div class="layer-badge"><span class="l-ui" style="flex:0.8;"></span><span class="l-api" style="flex:1.6;"></span><span class="l-db" style="flex:0.6;"></span></div>
+                </div>
+                <div style="background:var(--color-paper-2);border-radius:10px;padding:16px;">
+                  <p class="crumb">03 · panel interno</p>
+                  <h4 style="font-family:var(--font-ui);font-size:16px;margin:0 0 6px;">Dashboard de churn con scoring en vivo</h4>
+                  <p style="font-size:12.5px;color:var(--color-text-muted);margin:0 0 4px;">Next.js · Airflow · Postgres</p>
+                  <div class="layer-badge"><span class="l-ui" style="flex:1;"></span><span class="l-api" style="flex:0.8;"></span><span class="l-db" style="flex:1.4;"></span></div>
+                </div>
+                <div style="background:var(--color-paper-2);border-radius:10px;padding:16px;">
+                  <p class="crumb">04 · producto propio</p>
+                  <h4 style="font-family:var(--font-ui);font-size:16px;margin:0 0 6px;">Recomendador de catálogo con embeddings</h4>
+                  <p style="font-size:12.5px;color:var(--color-text-muted);margin:0 0 4px;">Remix · FastAPI · Supabase</p>
+                  <div class="layer-badge"><span class="l-ui" style="flex:1.2;"></span><span class="l-api" style="flex:1.2;"></span><span class="l-db" style="flex:1;"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section-block">
+      <p class="section-eyebrow">Detalle</p>
+      <h2 class="section-title">Un proyecto, abierto por capas</h2>
+      <p class="section-sub">El caso de estudio despliega la capa de interfaz, la de API y la de datos por separado, y después quién sos vos y cómo escribirte.</p>
+
+      <div class="grid-screens">
+
+        <article class="screen-card span-2" id="p-caso">
+          <p class="crumb">Detalle · 03</p>
+          <h3 class="screen-name">Caso de estudio</h3>
+          <p class="screen-desc">La "vista explotada" del proyecto: qué hace cada capa y por qué.</p>
+          <div class="browser-frame">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="browser-url">tuapellido.dev/proyectos/marketplace-b2b</span></div>
+            <div class="browser-body" style="padding:30px;">
+              <p class="crumb">ficha 01 · marketplace b2b</p>
+              <h2 style="font-family:var(--font-ui);font-weight:800;font-size:24px;margin:6px 0 6px;">Checkout y catálogo con búsqueda semántica</h2>
+              <p style="color:var(--color-text-muted);font-size:13px;margin:0 0 24px;">De la búsqueda del comprador al pago aprobado, un solo flujo.</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+                <div style="background:var(--color-paper-2);border-top:3px solid var(--layer-ui);border-radius:8px;padding:16px;">
+                  <span class="tag tag-ui">interfaz</span>
+                  <p style="font-size:12.5px;color:var(--color-text-muted);margin:10px 0 0;line-height:1.6;">Next.js + búsqueda instantánea con debounce y resultados semánticos, no solo texto exacto.</p>
+                </div>
+                <div style="background:var(--color-paper-2);border-top:3px solid var(--layer-api);border-radius:8px;padding:16px;">
+                  <span class="tag tag-api">lógica</span>
+                  <p style="font-size:12.5px;color:var(--color-text-muted);margin:10px 0 0;line-height:1.6;">FastAPI orquesta stock, precio dinámico y el flujo de Stripe Connect para pagos a vendedores.</p>
+                </div>
+                <div style="background:var(--color-paper-2);border-top:3px solid var(--layer-db);border-radius:8px;padding:16px;">
+                  <span class="tag tag-db">datos</span>
+                  <p style="font-size:12.5px;color:var(--color-text-muted);margin:10px 0 0;line-height:1.6;">Postgres + pgvector para embeddings de producto; catálogo de 80k SKUs indexado.</p>
+                </div>
+              </div>
+              <div style="display:flex;gap:30px;margin-top:24px;font-family:var(--font-mono);">
+                <div><p class="crumb" style="margin-bottom:4px;">búsqueda a resultado</p><p style="font-size:20px;font-weight:700;color:var(--layer-ui);margin:0;">180ms</p></div>
+                <div><p class="crumb" style="margin-bottom:4px;">conversión checkout</p><p style="font-size:20px;font-weight:700;color:var(--layer-api);margin:0;">+9%</p></div>
+                <div><p class="crumb" style="margin-bottom:4px;">SKUs indexados</p><p style="font-size:20px;font-weight:700;color:var(--layer-db);margin:0;">80k</p></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen-card" id="p-stack">
+          <p class="crumb">Detalle · 04</p>
+          <h3 class="screen-name">Sobre mí</h3>
+          <p class="screen-desc">Tu recorrido, contado como las capas que fuiste sumando.</p>
+          <div class="browser-frame">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="browser-url">tuapellido.dev/sobre-mi</span></div>
+            <div class="browser-body" style="padding:26px;">
+              <h3 style="font-family:var(--font-ui);font-weight:800;font-size:19px;margin:0 0 14px;">Cómo armo un proyecto</h3>
+              <div style="display:flex;gap:10px;margin-bottom:16px;">
+                <div style="flex:1;background:var(--color-paper-2);border-radius:8px;padding:10px;text-align:center;">
+                  <div style="height:3px;background:var(--layer-ui);border-radius:2px;margin-bottom:8px;"></div>
+                  <p style="font-family:var(--font-mono);font-size:11px;margin:0;">Next.js<br>Tailwind</p>
+                </div>
+                <div style="flex:1;background:var(--color-paper-2);border-radius:8px;padding:10px;text-align:center;">
+                  <div style="height:3px;background:var(--layer-api);border-radius:2px;margin-bottom:8px;"></div>
+                  <p style="font-family:var(--font-mono);font-size:11px;margin:0;">FastAPI<br>Go</p>
+                </div>
+                <div style="flex:1;background:var(--color-paper-2);border-radius:8px;padding:10px;text-align:center;">
+                  <div style="height:3px;background:var(--layer-db);border-radius:2px;margin-bottom:8px;"></div>
+                  <p style="font-family:var(--font-mono);font-size:11px;margin:0;">Postgres<br>Redis</p>
+                </div>
+              </div>
+              <p style="font-size:13px;color:var(--color-text-muted);line-height:1.7;margin:0;">
+                Prefiero entregar el flujo entero antes que optimizar una sola capa. Cuando falta una API, la escribo; cuando falta una pantalla, la levanto.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="screen-card" id="p-contacto">
+          <p class="crumb">Detalle · 05</p>
+          <h3 class="screen-name">Contacto</h3>
+          <p class="screen-desc">Sin fricción para arrancar una conversación.</p>
+          <div class="browser-frame">
+            <div class="browser-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="browser-url">tuapellido.dev/contacto</span></div>
+            <div class="browser-body" style="padding:26px;">
+              <h3 style="font-family:var(--font-ui);font-weight:800;font-size:19px;margin:0 0 6px;">Contame tu proyecto</h3>
+              <p style="font-size:12.5px;color:var(--color-text-muted);margin:0 0 18px;">Respondo en menos de 24hs.</p>
+              <label style="font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);display:block;margin-bottom:5px;">nombre</label>
+              <div style="background:var(--color-paper-2);border-radius:6px;height:32px;margin-bottom:14px;"></div>
+              <label style="font-family:var(--font-mono);font-size:11px;color:var(--color-text-muted);display:block;margin-bottom:5px;">qué necesitás</label>
+              <div style="background:var(--color-paper-2);border-radius:6px;height:64px;margin-bottom:18px;"></div>
+              <div class="btn btn-primary" style="text-align:center;">enviar</div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
