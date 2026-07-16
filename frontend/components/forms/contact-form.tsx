@@ -35,7 +35,7 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-6 flex max-w-105 flex-col gap-4">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
         <label htmlFor="name" className="font-mono text-[11px] text-text-muted">
           nombre

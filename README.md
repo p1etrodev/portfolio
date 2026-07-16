@@ -54,11 +54,11 @@ frontend/
 
 ### 2. Páginas / secciones
 - [x] **Navbar**: logo + nav (proyectos/sobre mí/contacto) + botón CV, sticky, estado activo por ruta — [site-header.tsx](frontend/components/layout/site-header.tsx) (el link de CV apunta a `/cv.pdf`, que todavía no existe — sección 4)
-- [x] **Inicio**: hero con tag, tagline, layer badge, CTAs — [page.tsx](frontend/app/page.tsx). "agendar llamada" hoy linkea a `/contacto` (no hay herramienta de booking definida). Falta: nav superior con CV descargable ya está en el navbar global, así que no aplica acá.
+- [x] **Inicio**: hero + "Proyectos destacados" (3 reales) + "Cómo trabajo" (bio real, 5+ años freelance) + CTA final a contacto — [page.tsx](frontend/app/page.tsx). "agendar llamada" linkea a `/contacto` (no hay herramienta de booking definida)
 - [x] **Proyectos** (listado): grid de cards con crumb/numeración, stack y layer badge con la proporción real de cada proyecto — [page.tsx](frontend/app/proyectos/page.tsx)
-- [x] **Caso de estudio** (detalle de proyecto): 3 columnas con borde de color por capa, métricas destacadas coloreadas — [\[slug\]/page.tsx](frontend/app/proyectos/[slug]/page.tsx). Solo `marketplace-b2b` tiene `layerDetails`/`metrics` reales hoy; los otros 3 proyectos degradan mostrando únicamente crumb/título/tagline hasta que se cargue contenido real (sección 3)
-- [x] **Sobre mí**: bloques de stack por capa con barra de color y texto de proceso de trabajo — [page.tsx](frontend/app/sobre-mi/page.tsx) (stack y copy son placeholder, contenido real en sección 3)
-- [x] **Contacto**: formulario funcional (nombre + mensaje) — [page.tsx](frontend/app/contacto/page.tsx) + [contact-form.tsx](frontend/components/forms/contact-form.tsx). Ya hace POST a `/api/contact` y maneja estados de carga/éxito/error; hoy muestra error porque la API todavía es un stub 501 (sección 4)
+- [x] **Caso de estudio** (detalle de proyecto): back link, crumb, stack, 3 columnas con borde de color por capa, métricas (vacías por ahora), navegación anterior/siguiente — [\[slug\]/page.tsx](frontend/app/proyectos/[slug]/page.tsx)
+- [x] **Sobre mí**: bio real (5+ años freelance), stack por capa, proyectos separados en "productos propios" / "para clientes" con links, CTA a contacto — [page.tsx](frontend/app/sobre-mi/page.tsx)
+- [x] **Contacto**: formulario funcional + canales reales (email, GitHub, LinkedIn) — [page.tsx](frontend/app/contacto/page.tsx) + [contact-form.tsx](frontend/components/forms/contact-form.tsx). El form ya hace POST a `/api/contact` y maneja estados de carga/éxito/error; hoy muestra error porque la API todavía es un stub 501 (sección 4)
 
 ### 3. Contenido real
 - [x] Proyectos reales (analizados desde GitHub, `P1etrodev`, incluyendo repos privados), reemplazando los 4 ficticios en [data/projects.ts](frontend/data/projects.ts). 6 proyectos full-stack con layer badge:
