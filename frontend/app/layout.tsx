@@ -79,10 +79,12 @@ export default function RootLayout({
           data={{
             "@context": "https://schema.org",
             "@type": "Person",
-            name: "tu apellido",
+            name: "Franco Pietrokovsky",
+            alternateName: "pietrodev",
             url: siteConfig.url,
             jobTitle: "Full stack developer",
             description: siteConfig.description,
+            sameAs: ["https://github.com/P1etrodev"],
           }}
         />
         <SiteHeader />

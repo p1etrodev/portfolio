@@ -61,11 +61,19 @@ frontend/
 - [x] **Contacto**: formulario funcional (nombre + mensaje) — [page.tsx](frontend/app/contacto/page.tsx) + [contact-form.tsx](frontend/components/forms/contact-form.tsx). Ya hace POST a `/api/contact` y maneja estados de carga/éxito/error; hoy muestra error porque la API todavía es un stub 501 (sección 4)
 
 ### 3. Contenido real
-- [ ] Reemplazar placeholders (`tuapellido.dev`, proyectos ficticios) con datos reales del usuario
-- [ ] Definir listado real de proyectos con stack, proporción de capas (UI/API/DB) y métricas verificables
-- [ ] Texto real "sobre mí" y stack tecnológico propio
+- [x] Proyectos reales (analizados desde GitHub, `P1etrodev`, incluyendo repos privados), reemplazando los 4 ficticios en [data/projects.ts](frontend/data/projects.ts). 6 proyectos full-stack con layer badge:
+  - **CRM de prospección y panel de salud organizacional** — cliente anonimizado como "consultora b2b" (repo real: "Sistema Conecta")
+  - **Hospy** — SaaS de dashboard para hostels
+  - **Costea** — gestión de producción para emprendimientos gastronómicos
+  - **Pooly** — tracker de sesiones de pool con ranking ELO
+  - **Panel interno de operaciones para un hostel** — cliente anonimizado (repo real: Alfar, migrado de Angular a Next.js + Supabase/PLpgSQL)
+  - **Tienda online con pagos integrados** — cliente anonimizado (repo real: Vikuri, Angular + Supabase + Mercado Pago)
+  - Sin métricas por ahora (decisión tuya: preferiste dejarlas vacías antes que inventar números) — la página ya degrada bien sin ellas
+- [x] Sección **"Otros proyectos"** en la página de Proyectos ([data/side-projects.ts](frontend/data/side-projects.ts)) — 14 repos reales sin las 3 capas (librerías publicadas, apps de escritorio, juegos, bots), sin layer badge porque no aplicaría honestamente. Link a GitHub excepto en el único privado (D&D Waitress Bot)
+- [x] Stack real en Sobre mí (TypeScript, Next.js, React, Astro, Vue, Angular · Django, DRF, FastAPI, Express, Go+Fiber · Postgres, Pandas, Polars) — [page.tsx](frontend/app/sobre-mi/page.tsx)
+- [x] Nombre real en JSON-LD (Franco Pietrokovsky / pietrodev) y `siteConfig.name` — [layout.tsx](frontend/app/layout.tsx), [site-config.ts](frontend/lib/site-config.ts)
 - [ ] CV descargable (PDF)
-- [ ] Copy en tono de marca (español rioplatense, directo, con números — ver `brand.md` sección 5)
+- [ ] Texto real "sobre mí" (el párrafo de proceso de trabajo sigue siendo el de `design.html`, no personalizado más allá de eso)
 
 ### 4. Funcionalidad
 - [ ] Formulario de contacto funcional vía API route propia de Next.js (`/app/api/contact`), con envío de mail (Resend/Nodemailer) — la capa "API/lógica" del portfolio hace de caso de estudio en sí misma

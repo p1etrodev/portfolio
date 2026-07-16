@@ -10,9 +10,9 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const stackByLayer: { layer: ProjectLayer; items: string[] }[] = [
-  { layer: "ui", items: ["Next.js", "Tailwind"] },
-  { layer: "api", items: ["FastAPI", "Go"] },
-  { layer: "db", items: ["Postgres", "Redis"] },
+  { layer: "ui", items: ["TypeScript", "Next.js", "React", "Astro", "Vue", "Angular"] },
+  { layer: "api", items: ["Django", "Django REST Framework", "FastAPI", "Express", "Go + Fiber"] },
+  { layer: "db", items: ["Postgres", "Pandas", "Polars"] },
 ];
 
 export default function SobreMiPage() {
@@ -22,16 +22,9 @@ export default function SobreMiPage() {
 
       <div className="mt-8 grid grid-cols-1 gap-2.5 sm:grid-cols-3">
         {stackByLayer.map(({ layer, items }) => (
-          <div key={layer} className="rounded-lg bg-paper-2 p-2.5 text-center">
+          <div key={layer} className="rounded-lg bg-paper-2 p-3 text-center">
             <div className={`mb-2 h-[3px] rounded-full ${layerBgClasses[layer]}`} />
-            <p className="font-mono text-[11px]">
-              {items.map((item, i) => (
-                <span key={item}>
-                  {item}
-                  {i < items.length - 1 && <br />}
-                </span>
-              ))}
-            </p>
+            <p className="font-mono text-[11px] leading-relaxed">{items.join(" · ")}</p>
           </div>
         ))}
       </div>
