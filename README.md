@@ -58,7 +58,7 @@ frontend/
 - [x] **Proyectos** (listado): grid de cards con crumb/numeración, stack y layer badge con la proporción real de cada proyecto — [page.tsx](frontend/app/proyectos/page.tsx)
 - [x] **Caso de estudio** (detalle de proyecto): 3 columnas con borde de color por capa, métricas destacadas coloreadas — [\[slug\]/page.tsx](frontend/app/proyectos/[slug]/page.tsx). Solo `marketplace-b2b` tiene `layerDetails`/`metrics` reales hoy; los otros 3 proyectos degradan mostrando únicamente crumb/título/tagline hasta que se cargue contenido real (sección 3)
 - [x] **Sobre mí**: bloques de stack por capa con barra de color y texto de proceso de trabajo — [page.tsx](frontend/app/sobre-mi/page.tsx) (stack y copy son placeholder, contenido real en sección 3)
-- [ ] **Contacto**: formulario (nombre + mensaje), tiempo de respuesta, botón enviar
+- [x] **Contacto**: formulario funcional (nombre + mensaje) — [page.tsx](frontend/app/contacto/page.tsx) + [contact-form.tsx](frontend/components/forms/contact-form.tsx). Ya hace POST a `/api/contact` y maneja estados de carga/éxito/error; hoy muestra error porque la API todavía es un stub 501 (sección 4)
 
 ### 3. Contenido real
 - [ ] Reemplazar placeholders (`tuapellido.dev`, proyectos ficticios) con datos reales del usuario
