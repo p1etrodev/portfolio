@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const links = [
@@ -10,7 +11,10 @@ export function SiteHeader() {
   return (
     <header>
       <nav>
-        <Link href="/">tu.apellido</Link>
+        <Link href="/">
+          <Image src="/logo.svg" alt="tu.apellido" width={28} height={28} priority />
+          tu.apellido
+        </Link>
         {links.map((link) => (
           <Link key={link.href} href={link.href}>
             {link.label}

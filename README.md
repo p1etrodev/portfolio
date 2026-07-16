@@ -72,7 +72,7 @@ frontend/
 - [ ] Navegación entre secciones (rail lateral del mockup → decidir si se traduce a nav real o se simplifica para sitio productivo)
 - [x] Base de meta tags / SEO por ruta (título, descripción, canonical, OG, Twitter, sitemap, robots, JSON-LD)
 - [ ] Imagen Open Graph de marca (falta el asset — hoy OG no tiene `images`)
-- [ ] Favicon con layer badge o versión simplificada
+- [x] Favicon/logo placeholder (`public/logo.svg`, no es el final) — usado como `icons.icon` en metadata, en `manifest.ts` y en el header
 
 ### 5. Responsive y accesibilidad
 - [ ] Adaptar grid de proyectos y rail lateral a mobile (el mockup ya define breakpoint `900px` para `span-2`)
