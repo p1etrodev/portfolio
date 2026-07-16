@@ -57,7 +57,7 @@ frontend/
 - [x] **Inicio**: hero + "Proyectos destacados" (3 reales) + "Cómo trabajo" (bio real, 5+ años freelance) + CTA final a contacto — [page.tsx](frontend/app/page.tsx). "agendar llamada" linkea a `/contacto` (no hay herramienta de booking definida)
 - [x] **Proyectos** (listado): grid de cards con crumb/numeración, stack y layer badge con la proporción real de cada proyecto — [page.tsx](frontend/app/proyectos/page.tsx)
 - [x] **Caso de estudio** (detalle de proyecto): back link, crumb, stack, 3 columnas con borde de color por capa, métricas (vacías por ahora), navegación anterior/siguiente — [\[slug\]/page.tsx](frontend/app/proyectos/[slug]/page.tsx)
-- [x] **Sobre mí**: bio real (5+ años freelance), stack por capa, proyectos separados en "productos propios" / "para clientes" con links, CTA a contacto — [page.tsx](frontend/app/sobre-mi/page.tsx)
+- [x] **Sobre mí**: bio real (5+ años freelance), un solo bloque de Stack agrupado por capa (con color) y, dentro de cada capa, discriminado por lenguaje (ej. lógica: Python/TypeScript/Go), proyectos separados en "productos propios" / "para clientes" con links, CTA a contacto — [page.tsx](frontend/app/sobre-mi/page.tsx)
 - [x] **Contacto**: formulario funcional + canales reales (email, GitHub, LinkedIn) — [page.tsx](frontend/app/contacto/page.tsx) + [contact-form.tsx](frontend/components/forms/contact-form.tsx). El form ya hace POST a `/api/contact` y maneja estados de carga/éxito/error; hoy muestra error porque la API todavía es un stub 501 (sección 4)
 
 ### 3. Contenido real
@@ -70,7 +70,7 @@ frontend/
   - **Tienda online con pagos integrados** — cliente anonimizado (repo real: Vikuri, Angular + Supabase + Mercado Pago)
   - Sin métricas por ahora (decisión tuya: preferiste dejarlas vacías antes que inventar números) — la página ya degrada bien sin ellas
 - [x] Sección **"Otros proyectos"** en la página de Proyectos ([data/side-projects.ts](frontend/data/side-projects.ts)) — 14 repos reales sin las 3 capas (librerías publicadas, apps de escritorio, juegos, bots), sin layer badge porque no aplicaría honestamente. Link a GitHub excepto en el único privado (D&D Waitress Bot)
-- [x] Stack real en Sobre mí (TypeScript, Next.js, React, Astro, Vue, Angular · Django, DRF, FastAPI, Express, Go+Fiber · Postgres, Pandas, Polars) — [page.tsx](frontend/app/sobre-mi/page.tsx)
+- [x] Stack real en Sobre mí, ampliado tras revisar tus repos de GitHub: sumamos Streamlit, Qt, Axios, TanStack Query, React Hook Form, Zod, Tailwind, shadcn/ui, Electron (interfaz), Supabase y PLpgSQL (datos) — evidenciados en Hospy/Vikuri/Alfar/Conecta/Pooly/ML Tracker/TangoCounter. Docker y Mercado Pago quedaron afuera de esta grilla por no ser lenguajes (ya figuran en sus proyectos respectivos) — [page.tsx](frontend/app/sobre-mi/page.tsx)
 - [x] Nombre real en JSON-LD (Franco Pietrokovsky / pietrodev) y `siteConfig.name` — [layout.tsx](frontend/app/layout.tsx), [site-config.ts](frontend/lib/site-config.ts)
 - [ ] CV descargable (PDF)
 - [ ] Texto real "sobre mí" (el párrafo de proceso de trabajo sigue siendo el de `design.html`, no personalizado más allá de eso)
