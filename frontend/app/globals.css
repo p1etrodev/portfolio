@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #0e1024;
+  --color-paper: #171a35;
+  --color-paper-2: #1f2342;
+  --color-text: #eef0fb;
+  --color-text-muted: #8d90b8;
+  --color-layer-ui: #d4f542;
+  --color-layer-api: #ff5d8f;
+  --color-layer-db: #4fd1e8;
+  --radius-brand: 14px;
+  --shadow-brand: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg: #eef0fb;
+    --color-paper: #ffffff;
+    --color-paper-2: #f4f5fc;
+    --color-text: #121327;
+    --color-text-muted: #5c5f80;
+    --shadow-brand: 0 24px 50px -20px rgba(20, 20, 50, 0.18);
+  }
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-paper: var(--color-paper);
+  --color-paper-2: var(--color-paper-2);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-layer-ui: var(--color-layer-ui);
+  --color-layer-api: var(--color-layer-api);
+  --color-layer-db: var(--color-layer-db);
+
+  --font-display: var(--font-instrument);
+  --font-ui: var(--font-grotesk);
+  --font-mono: var(--font-dm-mono);
+
+  --radius-brand: var(--radius-brand);
+  --shadow-brand: var(--shadow-brand);
+  --ease-brand: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+}

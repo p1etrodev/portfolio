@@ -1,0 +1,15 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "frontend/node_modules": true,
+    "frontend/.next": true
+  },
+  "hide-files.files": [
+    "frontend/node_modules",
+    "frontend/.next"
+  ]
+}

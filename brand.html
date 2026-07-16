@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exploded View — Manual de Marca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg: #0e1024;
+    --color-paper: #171a35;
+    --color-paper-2: #1f2342;
+    --color-text: #eef0fb;
+    --color-text-muted: #8d90b8;
+    --layer-ui: #d4f542;
+    --layer-api: #ff5d8f;
+    --layer-db: #4fd1e8;
+    --border: rgba(238,240,251,0.10);
+    --radius: 14px;
+  }
+  [data-theme="light"] {
+    --color-bg: #eef0fb;
+    --color-paper: #ffffff;
+    --color-paper-2: #f4f5fc;
+    --color-text: #121327;
+    --color-text-muted: #5c5f80;
+    --border: rgba(18,19,39,0.10);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Schibsted Grotesk', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    transition: background .3s ease, color .3s ease;
+  }
+
+  /* --- textura de fondo: gradientes tenues con los tres acentos --- */
+  .texture {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    background:
+      radial-gradient(circle at 12% 15%, var(--layer-ui), transparent 35%),
+      radial-gradient(circle at 85% 20%, var(--layer-api), transparent 40%),
+      radial-gradient(circle at 50% 90%, var(--layer-db), transparent 45%);
+  }
+  [data-theme="light"] .texture { opacity: 0.05; }
+
+  .wrap { position: relative; z-index: 1; }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  em, .serif {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .mono {
+    font-family: 'DM Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  /* --- nav --- */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+    background: color-mix(in srgb, var(--color-bg) 78%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: color .2s, background .2s;
+  }
+  .nav-links a:hover { color: var(--color-text); background: var(--color-paper-2); }
+
+  .theme-toggle {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--color-paper-2);
+    border: 1px solid var(--border);
+    color: var(--color-text);
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* --- hero --- */
+  header.hero {
+    padding-block: 96px 72px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    margin-bottom: 28px;
+  }
+  h1.hero-title {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+  }
+  .hero-sub {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    color: var(--color-text-muted);
+    max-width: 620px;
+    margin: 0 0 40px;
+  }
+
+  /* --- layer badge: elemento de firma --- */
+  .badge {
+    display: flex;
+    width: 100%;
+    max-width: 420px;
+    height: 14px;
+    border-radius: 999px;
+    overflow: hidden;
+    background: var(--color-paper-2);
+  }
+  .badge span { display: block; height: 100%; }
+  .badge .ui { background: var(--layer-ui); }
+  .badge .api { background: var(--layer-api); }
+  .badge .db { background: var(--layer-db); }
+
+  .badge-legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .badge-legend div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .dot.ui { background: var(--layer-ui); }
+  .dot.api { background: var(--layer-api); }
+  .dot.db { background: var(--layer-db); }
+
+  /* --- section shell --- */
+  section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+
+  .part-marker {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0 0 8px;
+  }
+  h2 {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.6rem, 4vw, 2.3rem);
+    letter-spacing: -0.01em;
+    margin: 0 0 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  h2 .num {
+    font-family: 'DM Mono', monospace;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+  p.lead {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    max-width: 640px;
+    margin: 0 0 32px;
+  }
+
+  /* --- color swatches --- */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .swatch {
+    border-radius: var(--radius);
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: var(--color-paper);
+  }
+  .swatch .chip {
+    width: 100%;
+    height: 56px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+  }
+  .swatch .name {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+  .swatch .val {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+  }
+
+  /* --- typography specimens --- */
+  .type-card {
+    background: var(--color-paper);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+  .type-card .mono { margin-bottom: 14px; display: block; }
+  .type-card .display-serif {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 2rem;
+    line-height: 1.15;
+  }
+  .type-card .display-grotesk {
+    font-family: 'Schibsted Grotesk', sans-serif;
+    font-weight: 900;
+    font-size: 2rem;
+    line-height: 1.05;
+  }
+  .type-card .display-mono {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+
+  /* --- layer badge examples (projects) --- */
+  .project-card {
+    background: var(--color-paper);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 14px;
+  }
+  .project-card .ptitle {
+    font-weight: 800;
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+  .project-card .pmeta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+
+  /* --- tags --- */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--color-paper-2);
+    border: 1px solid var(--border);
+    padding: 6px 11px;
+    border-radius: 999px;
+    margin: 0 8px 8px 0;
+  }
+
+  /* --- tone of voice examples --- */
+  .tone-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 640px) { .tone-compare { grid-template-columns: 1fr; } }
+  .tone-box {
+    border-radius: var(--radius);
+    padding: 20px;
+    font-size: 0.95rem;
+  }
+  .tone-box.bad {
+    background: var(--color-paper-2);
+    border: 1px dashed var(--border);
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+  }
+  .tone-box.good {
+    background: var(--color-paper);
+    border: 1px solid var(--layer-ui);
+  }
+  .tone-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .tone-box.bad .tone-label { color: var(--layer-api); }
+  .tone-box.good .tone-label { color: var(--layer-ui); }
+
+  /* --- tables --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+    font-size: 0.92rem;
+  }
+  th, td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    font-weight: 400;
+  }
+  .table-wrap { overflow-x: auto; margin-bottom: 24px; }
+
+  /* --- bio mock --- */
+  .phone-mock {
+    max-width: 320px;
+    background: var(--color-paper);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 28px 22px;
+  }
+  .avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+  }
+  .avatar .badge { max-width: 40px; height: 8px; }
+  .handle { font-weight: 800; margin-bottom: 6px; }
+  .bio-line1 { font-weight: 900; font-size: 1.05rem; margin-bottom: 4px; }
+  .bio-line2 { font-family: 'Instrument Serif', serif; font-style: italic; color: var(--color-text-muted); margin-bottom: 10px; }
+  .bio-link { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--layer-db); }
+
+  /* --- cover template mock --- */
+  .cover-mock {
+    aspect-ratio: 4/5;
+    max-width: 300px;
+    border-radius: var(--radius);
+    background: var(--color-paper);
+    border: 1px solid var(--border);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover-mock::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 20%, var(--layer-ui), transparent 40%),
+      radial-gradient(circle at 90% 30%, var(--layer-api), transparent 45%),
+      radial-gradient(circle at 60% 100%, var(--layer-db), transparent 45%);
+    opacity: 0.08;
+  }
+  .cover-mock .cbadge { position: relative; z-index: 1; }
+  .cover-mock .ctitle {
+    position: relative; z-index: 1;
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    margin: 20px 0 8px;
+  }
+  .cover-mock .chook {
+    position: relative; z-index: 1;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+
+  /* --- checklist --- */
+  ul.rules { list-style: none; padding: 0; margin: 0; }
+  ul.rules li {
+    padding: 14px 0 14px 28px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  ul.rules li:last-child { border-bottom: none; }
+  ul.rules li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 19px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--layer-db);
+  }
+
+  footer {
+    padding: 48px 0 80px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="texture"></div>
+<div class="wrap">
+
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-links">
+        <a href="#concepto">Concepto</a>
+        <a href="#paleta">Paleta</a>
+        <a href="#tipografia">Tipografía</a>
+        <a href="#badge">Layer badge</a>
+        <a href="#tono">Tono</a>
+        <a href="#pillars">Pillars</a>
+        <a href="#formatos">Formatos</a>
+        <a href="#portada">Portada</a>
+      </div>
+      <button class="theme-toggle" id="themeToggle">Modo claro</button>
+    </div>
+  </nav>
+
+  <header class="hero container">
+    <div class="eyebrow">
+      <span class="dot ui"></span> Manual de marca — full stack developer
+    </div>
+    <h1 class="hero-title">Exploded View</h1>
+    <p class="hero-sub">Hago el producto entero — de la base de datos al click que ve el usuario.</p>
+    <div class="badge">
+      <span class="ui" style="width:38%"></span>
+      <span class="api" style="width:34%"></span>
+      <span class="db" style="width:28%"></span>
+    </div>
+    <div class="badge-legend">
+      <div><span class="dot ui"></span> Interfaz</div>
+      <div><span class="dot api"></span> API / lógica</div>
+      <div><span class="dot db"></span> Datos</div>
+    </div>
+  </header>
+
+  <!-- PARTE A -->
+
+  <section id="concepto" class="container">
+    <p class="part-marker">Parte A — Identidad base / 01</p>
+    <h2><span class="num">01</span> Concepto</h2>
+    <p class="lead">El trabajo full stack tiene capas — y esas capas se muestran, no se esconden.</p>
+    <p>"Exploded view": interfaz, API y datos apilados como motivo visual constante — franjas de fondo y un "layer badge" que acompaña cada proyecto para mostrar de qué está hecho. Dirección deliberadamente distinta a la terminal oscura genérica o al cuaderno notion-style: mostrar lo que soy, alguien que entrega la pila completa.</p>
+  </section>
+
+  <section id="paleta" class="container">
+    <p class="part-marker">Parte A / 02</p>
+    <h2><span class="num">02</span> Paleta de colores</h2>
+    <p class="lead">Tres acentos funcionales, no decorativos — cada uno es siempre la misma capa técnica.</p>
+
+    <div class="swatch-grid">
+      <div class="swatch">
+        <div class="chip" style="background:var(--color-bg)"></div>
+        <div class="name">Fondo</div>
+        <div class="val">--color-bg</div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--color-paper)"></div>
+        <div class="name">Superficie</div>
+        <div class="val">--color-paper</div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--layer-ui)"></div>
+        <div class="name">Interfaz (lima)</div>
+        <div class="val">--layer-ui · #d4f542</div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--layer-api)"></div>
+        <div class="name">API (magenta)</div>
+        <div class="val">--layer-api · #ff5d8f</div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:var(--layer-db)"></div>
+        <div class="name">Datos (cian)</div>
+        <div class="val">--layer-db · #4fd1e8</div>
+      </div>
+    </div>
+    <p style="color:var(--color-text-muted); font-size:0.9rem;">Probá el botón "Modo claro" del nav: el fondo y las superficies cambian, los tres colores de capa no — se mantienen fijos siempre, en cualquier modo.</p>
+  </section>
+
+  <section id="tipografia" class="container">
+    <p class="part-marker">Parte A / 03</p>
+    <h2><span class="num">03</span> Tipografía</h2>
+    <p class="lead">Tres familias, cada una con un rol fijo — no se mezclan funciones.</p>
+
+    <div class="type-card">
+      <span class="mono">Instrument Serif italic — frases fuertes / taglines</span>
+      <div class="display-serif">Hago el producto entero, de punta a punta.</div>
+    </div>
+    <div class="type-card">
+      <span class="mono">Schibsted Grotesk 900 — títulos, cuerpo, botones</span>
+      <div class="display-grotesk">Diseño, construyo y despliego.</div>
+    </div>
+    <div class="type-card">
+      <span class="mono">DM Mono — specs, labels, métricas</span>
+      <div class="display-mono">STACK: REACT · NODE · POSTGRES · REDIS — 80K SKUS INDEXADOS</div>
+    </div>
+  </section>
+
+  <section id="badge" class="container">
+    <p class="part-marker">Parte A / 04</p>
+    <h2><span class="num">04</span> El "layer badge"</h2>
+    <p class="lead">Las proporciones cambian según cada proyecto real — no es decorativo, comunica en qué consistió el trabajo.</p>
+
+    <div class="project-card">
+      <div class="ptitle">Checkout de e-commerce</div>
+      <div class="pmeta">UI-heavy · +9% conversión</div>
+      <div class="badge">
+        <span class="ui" style="width:60%"></span>
+        <span class="api" style="width:25%"></span>
+        <span class="db" style="width:15%"></span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="ptitle">Motor de pricing dinámico</div>
+      <div class="pmeta">API-heavy · 12ms latencia p95</div>
+      <div class="badge">
+        <span class="ui" style="width:15%"></span>
+        <span class="api" style="width:65%"></span>
+        <span class="db" style="width:20%"></span>
+      </div>
+    </div>
+    <div class="project-card">
+      <div class="ptitle">Dashboard de scoring</div>
+      <div class="pmeta">DB-heavy · 80k SKUs indexados</div>
+      <div class="badge">
+        <span class="ui" style="width:20%"></span>
+        <span class="api" style="width:22%"></span>
+        <span class="db" style="width:58%"></span>
+      </div>
+    </div>
+
+    <p style="margin-top:24px; color:var(--color-text-muted); font-size:0.9rem;">Versión inline — tags para listas de skills o stacks:</p>
+    <div style="margin-top:10px;">
+      <span class="tag"><span class="dot ui"></span> React</span>
+      <span class="tag"><span class="dot api"></span> Node.js</span>
+      <span class="tag"><span class="dot api"></span> GraphQL</span>
+      <span class="tag"><span class="dot db"></span> PostgreSQL</span>
+      <span class="tag"><span class="dot db"></span> Redis</span>
+    </div>
+  </section>
+
+  <section id="tono" class="container">
+    <p class="part-marker">Parte A / 05</p>
+    <h2><span class="num">05</span> Tono de voz</h2>
+    <p class="lead">Español rioplatense, directo, siempre concreto — números y hechos, no adjetivos.</p>
+
+    <div class="tone-compare">
+      <div class="tone-box bad">
+        <span class="tone-label">Evitar</span>
+        Amplia experiencia en desarrollo full stack con foco en soluciones escalables y de alto impacto.
+      </div>
+      <div class="tone-box good">
+        <span class="tone-label">Usar</span>
+        Indexé 80k SKUs y bajé la latencia de búsqueda a 12ms. El checkout que armé subió la conversión +9%.
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTE B -->
+
+  <section id="pillars" class="container">
+    <p class="part-marker">Parte B — Creación de contenido / 08</p>
+    <h2><span class="num">08</span> Content pillars</h2>
+    <p class="lead">Categorías de contenido recurrente, más allá de "un proyecto real" — para publicar sin depender solo de tener proyectos nuevos.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Pilar</th><th>Qué es</th><th>Layer badge</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Proyecto real</strong></td>
+            <td>Caso concreto: qué hiciste, stack, métrica de impacto</td>
+            <td><span class="tag"><span class="dot ui"></span>Sí — proporción real</span></td>
+          </tr>
+          <tr>
+            <td><strong>Tip técnico</strong></td>
+            <td>Solución puntual, patrón, herramienta</td>
+            <td><span class="tag"><span class="dot api"></span>Mínima / un tag</span></td>
+          </tr>
+          <tr>
+            <td><strong>Opinión / hot take</strong></td>
+            <td>Postura sobre una tecnología o tendencia</td>
+            <td><span class="tag">No</span></td>
+          </tr>
+          <tr>
+            <td><strong>Detrás de escena</strong></td>
+            <td>Proceso de trabajo, día a día</td>
+            <td><span class="tag"><span class="dot db"></span>Opcional</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="formatos" class="container">
+    <p class="part-marker">Parte B / 09</p>
+    <h2><span class="num">09</span> Formatos y specs</h2>
+    <p class="lead">Pensar en formato, no en plataforma — diseñar una vez y exportar a donde corresponda.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Formato</th><th>Ratio</th><th>Dónde</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Vertical corto</td><td class="mono" style="text-transform:none; letter-spacing:normal;">9:16</td><td>Reels, TikTok, Shorts</td></tr>
+          <tr><td>Horizontal largo</td><td class="mono" style="text-transform:none; letter-spacing:normal;">16:9</td><td>YouTube</td></tr>
+          <tr><td>Post estático</td><td class="mono" style="text-transform:none; letter-spacing:normal;">4:5</td><td>Instagram, X, LinkedIn</td></tr>
+          <tr><td>Carrusel</td><td class="mono" style="text-transform:none; letter-spacing:normal;">4:5 / slide</td><td>Instagram, LinkedIn</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="color:var(--color-text-muted); font-size:0.9rem; margin-bottom: 20px;">Ejemplo de bio / presencia de perfil, misma estructura en cualquier red:</p>
+
+    <div class="phone-mock">
+      <div class="avatar">
+        <div class="badge">
+          <span class="ui" style="width:38%"></span>
+          <span class="api" style="width:34%"></span>
+          <span class="db" style="width:28%"></span>
+        </div>
+      </div>
+      <div class="handle">@pietrodev</div>
+      <div class="bio-line1">Full stack — de la DB al click</div>
+      <div class="bio-line2">hago el producto entero</div>
+      <div class="bio-link">→ tudominio.dev</div>
+    </div>
+  </section>
+
+  <section id="portada" class="container">
+    <p class="part-marker">Parte B / 10</p>
+    <h2><span class="num">10</span> Plantilla de portada</h2>
+    <p class="lead">Misma estructura en cualquier plataforma: badge, título, gancho, textura de fondo.</p>
+
+    <div class="grid-2">
+      <div class="cover-mock">
+        <div class="cbadge">
+          <div class="badge" style="max-width:100%;">
+            <span class="ui" style="width:60%"></span>
+            <span class="api" style="width:25%"></span>
+            <span class="db" style="width:15%"></span>
+          </div>
+        </div>
+        <div class="ctitle">Así armé un checkout que subió la conversión 9%</div>
+        <div class="chook">de la idea al deploy</div>
+      </div>
+      <div class="cover-mock">
+        <div class="cbadge">
+          <div class="badge" style="max-width:100%;">
+            <span class="ui" style="width:20%"></span>
+            <span class="api" style="width:22%"></span>
+            <span class="db" style="width:58%"></span>
+          </div>
+        </div>
+        <div class="ctitle">80k SKUs indexados en 12ms</div>
+        <div class="chook">el dashboard por dentro</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <p class="part-marker">Reglas de consistencia</p>
+    <h2><span class="num">12</span> Consistencia entre piezas</h2>
+    <ul class="rules">
+      <li>El código de color de capas (lima=UI, magenta=API, cian=datos) nunca se reasigna, en ningún material ni plataforma.</li>
+      <li>Los roles tipográficos son fijos: Instrument Serif itálica nunca es texto de interfaz, DM Mono nunca es cuerpo largo.</li>
+      <li>El layer badge mantiene el mismo lugar y tamaño en toda portada donde aparezca.</li>
+      <li>Un mismo contenido se adapta entre plataformas sin que la identidad visual cambie según la red de destino.</li>
+    </ul>
+  </section>
+
+  <footer class="container">
+    Exploded View — manual de marca personal
+  </footer>
+
+</div>
+
+<script>
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    const root = document.documentElement;
+    const isLight = root.getAttribute('data-theme') === 'light';
+    root.setAttribute('data-theme', isLight ? 'dark' : 'light');
+    btn.textContent = isLight ? 'Modo claro' : 'Modo oscuro';
+  });
+</script>
+
+</body>
+</html>
