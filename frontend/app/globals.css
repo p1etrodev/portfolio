@@ -50,6 +50,11 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-ui);
+  background-image:
+    linear-gradient(180deg, rgba(212, 245, 66, 0.05), transparent 22%),
+    linear-gradient(0deg, rgba(79, 209, 232, 0.05), transparent 22%),
+    radial-gradient(circle at 80% 20%, rgba(255, 93, 143, 0.09), transparent 45%);
+  background-attachment: fixed;
 }
 
 @keyframes assemble {

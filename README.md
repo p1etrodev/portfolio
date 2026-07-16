@@ -50,10 +50,11 @@ frontend/
 - [x] Componente de botón — [button.tsx](frontend/components/ui/button.tsx): un solo `Button` polimórfico con `variant="primary" | "ghost"`; si recibe `href` renderiza `<Link>`, si no, `<button>` (evita tener `Button` y `ButtonLink` por separado)
 - [x] Tipografía: ya cubierta por los tokens `font-display`/`font-ui`/`font-mono` del theme (sección 0), no requiere componente aparte
 - [x] Animación "assemble" — utilidad CSS `.animate-assemble` en [globals.css](frontend/app/globals.css)
+- [x] Textura de fondo (gradientes tenues lima/magenta/cian) aplicada globalmente al `body` en [globals.css](frontend/app/globals.css)
 
 ### 2. Páginas / secciones
 - [x] **Navbar**: logo + nav (proyectos/sobre mí/contacto) + botón CV, sticky, estado activo por ruta — [site-header.tsx](frontend/components/layout/site-header.tsx) (el link de CV apunta a `/cv.pdf`, que todavía no existe — sección 4)
-- [ ] **Inicio**: hero con tagline, layer badge, CTAs ("ver proyectos", "agendar llamada")
+- [x] **Inicio**: hero con tag, tagline, layer badge, CTAs — [page.tsx](frontend/app/page.tsx). "agendar llamada" hoy linkea a `/contacto` (no hay herramienta de booking definida). Falta: nav superior con CV descargable ya está en el navbar global, así que no aplica acá.
 - [ ] **Proyectos** (listado): grid de cards, cada una con su propio layer badge con proporción real, stack usado, crumb/numeración
 - [ ] **Caso de estudio** (detalle de proyecto): 3 columnas (interfaz/lógica/datos) con borde de color por capa, métricas destacadas (mono, coloreadas por capa)
 - [ ] **Sobre mí**: bloques de stack por capa (frontend/backend/datos), texto de proceso de trabajo
