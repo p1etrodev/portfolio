@@ -78,7 +78,7 @@ frontend/
 ### 4. Funcionalidad
 - [ ] Formulario de contacto funcional vía API route propia de Next.js (`/app/api/contact`), con envío de mail (Resend/Nodemailer) — la capa "API/lógica" del portfolio hace de caso de estudio en sí misma
 - [ ] Descarga de CV (link a PDF)
-- [ ] Navegación entre secciones (rail lateral del mockup → decidir si se traduce a nav real o se simplifica para sitio productivo)
+- [x] Navegación entre secciones: navbar simplificado (sin la rail lateral del mockup, que era solo del visor de `design.html`) + footer completo con logo, nav, layer badge y canales de contacto — [site-footer.tsx](frontend/components/layout/site-footer.tsx)
 - [x] Base de meta tags / SEO por ruta (título, descripción, canonical, OG, Twitter, sitemap, robots, JSON-LD)
 - [ ] Imagen Open Graph de marca (falta el asset — hoy OG no tiene `images`)
 - [x] Favicon/logo placeholder (`public/logo.svg`, no es el final) — usado como `icons.icon` en metadata, en `manifest.ts` y en el header

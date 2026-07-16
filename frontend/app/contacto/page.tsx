@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/forms/contact-form";
+import { channels } from "@/lib/channels";
 import { buildMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = buildMetadata({
@@ -7,16 +8,6 @@ export const metadata: Metadata = buildMetadata({
   description: "Contame tu proyecto. Respondo en menos de 24hs.",
   path: "/contacto",
 });
-
-const channels = [
-  { label: "email", value: "pietrocodes@gmail.com", href: "mailto:pietrocodes@gmail.com" },
-  { label: "github", value: "github.com/P1etrodev", href: "https://github.com/P1etrodev" },
-  {
-    label: "linkedin",
-    value: "linkedin.com/in/francodavidp",
-    href: "https://www.linkedin.com/in/francodavidp",
-  },
-];
 
 export default function ContactoPage() {
   return (
